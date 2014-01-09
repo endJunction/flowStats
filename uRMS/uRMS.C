@@ -66,6 +66,8 @@ int main(int argc, char *argv[])
             volIntegral += magVecField[cellI]*magVecField.mesh().V()[cellI];
             volume += magVecField.mesh().V()[cellI];
         }
+        Info << "Domain volume = " << volume << endl;
+        Info << "Volume integral = " << volIntegral << endl;
         Info << "RMS(mag(" << vecFieldName << ")) = " << Foam::sqrt(volIntegral/volume);
 
         Info<< endl;
