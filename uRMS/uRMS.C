@@ -58,17 +58,20 @@ int main(int argc, char *argv[])
         const volVectorField vecField(vecFieldHeader, mesh);
         const volScalarField magVecField(magSqr(vecField));
 
-        scalar volIntegral = 0;
+        scalar volIntegral2 = 0;
+        vector volIntegral(0, 0, 0);
         scalar volume = 0;
 
         forAll (magVecField, cellI)
         {
-            volIntegral += magVecField[cellI]*magVecField.mesh().V()[cellI];
+            volIntegral2 += magVecField[cellI]*magVecField.mesh().V()[cellI];
+            volIntegral += vecField[cellI]*vecField.mesh().V()[cellI];
             volume += magVecField.mesh().V()[cellI];
         }
         Info << "Domain volume = " << volume << endl;
-        Info << "Volume integral = " << volIntegral << endl;
-        Info << "RMS(mag(" << vecFieldName << ")) = " << Foam::sqrt(volIntegral/volume);
+        Info << "Volume integral = " << volIntegral2 << endl;
+        Info << "RMS(mag(" << vecFieldName << ")) = " << Foam::sqrt(volIntegral2/volume) << endl;
+        Info << "avg(" << vecFieldName << ")) = " << volIntegral/volume;
 
         Info<< endl;
     }
